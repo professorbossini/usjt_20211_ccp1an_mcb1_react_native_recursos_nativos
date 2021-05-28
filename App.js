@@ -1,21 +1,26 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import reduxThunk from 'redux-thunk';
+import { StyleSheet, View } from 'react-native';
+import LugaresNavigator from './navegacao/LugaresNavigator'
+import lugaresReducer from './store/lugares-reducers';
+
+const rootReducer = combineReducers({
+  lugares: lugaresReducer
+})
+
+const store = createStore (rootReducer, applyMiddleware(reduxThunk));
+
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <LugaresNavigator />
+    </Provider>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  
 });
